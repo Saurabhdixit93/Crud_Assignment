@@ -7,7 +7,7 @@ This is a simple CRUD API for posting social media posts, as well as adding like
 1. Clone the repository:
 
 bash
-git clone <repository-url>
+git clone `https://github.com/Saurabhdixit93/Crud_Assignment`
 
 2. Install the dependencies:
 
@@ -77,9 +77,6 @@ json
 "temporaryPassword": "examplePassword"
 }
 
-To update the README.md file to include information about JWT authentication required in the header, you can add the following instructions:
-
-markdown
 
 
 ### Get all posts
