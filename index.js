@@ -3,6 +3,8 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const PORT = 5000;
 const app = express();
+const cors = require("cors");
+app.use(cors());
 // for json
 app.use(express.json());
 // form data
