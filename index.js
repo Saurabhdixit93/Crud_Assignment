@@ -8,7 +8,7 @@ app.use(cors());
 // for json
 app.use(express.json());
 // form data
-app.use(express.urlencoded({ extends: true }));
+app.use(express.urlencoded({ extended: true }));
 // using routes
 app.use("/", require("./routers"));
 //not found route
