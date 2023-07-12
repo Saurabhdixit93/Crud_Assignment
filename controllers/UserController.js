@@ -4,6 +4,9 @@ const bcryptJs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const secreteKey = process.env.SECRETE_KEY;
+// for id using UUID
+const uuid = require("uuid");
+
 // signup function
 module.exports.createUser = async (req, res) => {
   const { userName, userEmail, userPassword } = req.body;
@@ -38,6 +41,7 @@ module.exports.createUser = async (req, res) => {
     const encryptedPassword = encryptData(hashedPassword);
     // Create a new user object
     const userCreate = {
+      id: uuid.v4(),
       userEmail: userEmail,
       userName: userName,
       userPassword: encryptedPassword,
@@ -65,7 +69,7 @@ module.exports.loginUser = async (req, res) => {
     const userFind = UserModel.find((user) => user.userName === userName);
     if (!userFind) {
       return res.status(404).json({
-        message: `User Not Found With Given userName : ${userName}`,
+        message: User Not Found With Given userName : ${userName},
       });
     }
     // decrypt data
@@ -79,13 +83,9 @@ module.exports.loginUser = async (req, res) => {
       });
     }
     // generate token for jwt aauth
-    const token = await jwt.sign(
-      { userName: userFind.userPassword },
-      secreteKey,
-      {
-        expiresIn: "1h",
-      }
-    );
+    const token = await jwt.sign({ id: userFind.id }, secreteKey, {
+      expiresIn: "1h",
+    });
     return res.status(200).json({
       message: "Loggedin Successfull , Use This Token For AUTH ROUTES",
       token: token,
@@ -134,9 +134,11 @@ module.exports.forgotPassword = async (req, res) => {
   }
 };
 
+
+
 // Initialize encryption key variable nd encryption IV variable
-let encryptionKey = null; 
-let encryptionIV = null; 
+let encryptionKey = null;
+let encryptionIV = null;
 
 // Generate a random encryption key and IV if not already generated
 function generateEncryptionKeyAndIV() {
